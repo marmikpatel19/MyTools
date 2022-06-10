@@ -47,6 +47,21 @@ app.post("/api/tools", (req, res) => {
   res.send(tool);
 });
 
+// HTTP PUT Request
+app.put("/api/tools/:id", (req, res) => {
+  const tool = getTool(req, res);
+
+  // Validation
+  const { error } = ValidateTool(req.body);
+  if (error) res.status(400).send(error.details[0].message);
+
+  // Update course
+  tool.id = req.body.id;
+  tool.name = req.body.name;
+  tool.cost = req.body.cost;
+  res.send(tool);
+});
+
 // Helper Functions
 
 /*Get a Tool*/

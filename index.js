@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const Joi = require("joi");
+app.use(express.json());
 
 // Tools
 const tools = [
@@ -25,7 +26,7 @@ app.get("/api/tools", (req, res) => {
 });
 
 // HTTP GET Request
-app.get("/api/tools:id", (req, res) => {
+app.get("/api/tools/:id", (req, res) => {
   res.send(getTool(req, res));
 });
 
@@ -40,4 +41,15 @@ function getTool(req, res) {
       .send(`The tool with ID ${req.params.id} was not found`);
 
   return tool;
+}
+
+/*Validate a Request*/
+function ValidateTool(tool) {
+  const schema = Joi.object({
+    id: Joi.number().required().min(0).max(5000),
+    name: Joi.string().required(),
+    cost: Joi.number().required().min(0.0),
+  });
+
+  return schema.validate(tool);
 }

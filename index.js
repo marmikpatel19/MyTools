@@ -55,10 +55,19 @@ app.put("/api/tools/:id", (req, res) => {
   const { error } = ValidateTool(req.body);
   if (error) res.status(400).send(error.details[0].message);
 
-  // Update course
+  // Update tool
   tool.id = req.body.id;
   tool.name = req.body.name;
   tool.cost = req.body.cost;
+  res.send(tool);
+});
+
+// HTTP DELETE Request
+app.delete("/api/tools/:id", (req, res) => {
+  const tool = getTool(req, res);
+
+  // Remove tool
+  tools.splice(tools.indexOf(tool), 1);
   res.send(tool);
 });
 

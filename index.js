@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const Joi = require("joi");
 
 // Tools
 const tools = [
@@ -22,3 +23,16 @@ app.get("/", (req, res) => {
 app.get("/api/tools", (req, res) => {
   res.send(tools);
 });
+
+// Helper Functions
+
+/*Get a Tool*/
+function getTool(req, res) {
+  const tool = tools.find((t) => t.id === parseInt(req.params.id));
+  if (!tool)
+    return res
+      .status(404)
+      .send(`The tool with ID ${req.params.id} was not found`);
+
+  return tool;
+}

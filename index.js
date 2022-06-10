@@ -30,6 +30,23 @@ app.get("/api/tools/:id", (req, res) => {
   res.send(getTool(req, res));
 });
 
+// HTTP POST Request
+app.post("/api/tools", (req, res) => {
+  // Validation
+  const { error } = ValidateTool(req.body);
+  if (error) res.status(400).send(error.details[0].message);
+
+  // Create tool
+  const tool = {
+    id: req.body.id,
+    name: req.body.name,
+    cost: req.body.cost,
+  };
+
+  tools.push(tool);
+  res.send(tool);
+});
+
 // Helper Functions
 
 /*Get a Tool*/

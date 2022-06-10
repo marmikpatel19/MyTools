@@ -24,6 +24,11 @@ app.get("/api/tools", (req, res) => {
   res.send(tools);
 });
 
+// HTTP GET Request
+app.get("/api/tools:id", (req, res) => {
+  res.send(getTool(req, res));
+});
+
 // Helper Functions
 
 /*Get a Tool*/
